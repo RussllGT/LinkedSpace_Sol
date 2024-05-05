@@ -12,6 +12,14 @@ namespace LifeGame.Model
         public int Rows { get; private set; }
         public int Columns { get; private set; }
 
+        public ConwaysLifeDataIO() { }
+
+        public ConwaysLifeDataIO(int rows, int columns)
+        {
+            Rows = rows; 
+            Columns = columns;
+        }
+
         public byte[] ReadFile(FileInfo file)
         {
             List<byte> compressed = new List<byte>();
@@ -37,9 +45,6 @@ namespace LifeGame.Model
 
         public void WriteFile(FileInfo file, byte[] data)
         {
-            Rows = data.GetUpperBound(0) + 1;
-            Columns = data.Length / Rows;
-
             List<byte> compressed = new List<byte>();
             byte current = BYTE_0;
             byte mask = BYTE_1;

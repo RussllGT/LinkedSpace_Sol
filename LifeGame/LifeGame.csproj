@@ -80,6 +80,7 @@
     <Compile Include="Model\ConwaysLifeColors.cs" />
     <Compile Include="Model\ConwaysLifeDataIO.cs" />
     <Compile Include="ConwaysLifeSim.cs" />
+    <Compile Include="Model\ConwaysLifeSetter.cs" />
     <Compile Include="Model\Creators\ConwaysLifeCreator.cs" />
     <Compile Include="Model\Creators\EmptyField.cs" />
     <Compile Include="Model\Creators\FieldFromFile.cs" />

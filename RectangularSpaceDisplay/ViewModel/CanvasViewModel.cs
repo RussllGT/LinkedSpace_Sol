@@ -70,6 +70,10 @@ namespace RectangularSpaceDisplay.ViewModel
         public abstract void ResetCells(int height, int width);
         public abstract void Redraw(StepResult<TColor> step);
 
+        public abstract void StartEdit();
+        public abstract void ApplyEdit();
+        public abstract void CancelEdit();
+
         #endregion
     }
 }

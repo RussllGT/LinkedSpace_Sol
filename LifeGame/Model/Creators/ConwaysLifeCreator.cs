@@ -27,8 +27,8 @@ namespace LifeGame.Model.Creators
 
             void Connect(int k)
             {
-                int j = k % Args.Columns;
-                int i = k / Args.Columns;
+                int i = k % Args.Columns;
+                int j = k / Args.Columns;
 
                 int xi, xj, count;
 
@@ -45,18 +45,18 @@ namespace LifeGame.Model.Creators
                         xi = i + di;
                         xj = j + dj;
 
-                        if (xi < 0) xi = Args.Rows - 1;
-                        else if (xi == Args.Rows) xi = 0;
+                        if (xi < 0) xi = Args.Columns - 1;
+                        else if (xi == Args.Columns) xi = 0;
 
-                        if (xj < 0) xj = Args.Columns - 1;
-                        else if (xj == Args.Columns) xj = 0;
+                        if (xj < 0) xj = Args.Rows - 1;
+                        else if (xj == Args.Rows) xj = 0;
 
                         cells[Index(xi, xj)].AddInput(count);
                     }
                 }
             }
 
-            int Index(int i, int j) => i * Args.Columns + j;
+            int Index(int i, int j) => j * Args.Columns + i;
         }
     }
 }

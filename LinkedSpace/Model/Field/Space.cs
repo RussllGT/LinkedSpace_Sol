@@ -1,5 +1,6 @@
 ﻿using LinkedSpace.Model.Color;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace LinkedSpace.Model.Field
 {
@@ -10,6 +11,9 @@ namespace LinkedSpace.Model.Field
         protected Space() { }
 
         public abstract void Next(Argb[] colors);
+        public abstract Task<Argb> ChangeCell(object sender, int index);
         public abstract bool WriteFile(FileInfo file);
+        public abstract void Commit();
+        public abstract void RollBack();
     }
 }

@@ -6,16 +6,13 @@
              xmlns:oxy="http://oxyplot.org/wpf"
              xmlns:local="clr-namespace:RectangularSpaceDisplay"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1000">
+             d:DesignHeight="500" d:DesignWidth="700">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="200"/>
-        </Grid.ColumnDefinitions>
+        
         <oxy:PlotView Grid.Row="0" Model="{Binding Path=Canvas.Screen}" Margin="5" Width="Auto" Height="Auto"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="5">
@@ -36,7 +33,7 @@
 
                 </StackPanel>
             </GroupBox>
-            
+
             <GroupBox Header="Симуляция" Background="White" Margin="5" VerticalAlignment="Center">
 
                 <GroupBox.Visibility>
@@ -83,95 +80,57 @@
                 </StackPanel>
             </GroupBox>
 
+            <GroupBox Header="Редактирование" Background="White" Margin="5" VerticalAlignment="Center">
+
+                <GroupBox.Visibility>
+                    <MultiBinding Converter="{StaticResource VisibilityMultiConverter}" ConverterParameter="And">
+                        <Binding Path="Status.IsReady" Converter="{StaticResource BoolToVisibilityConverter}" ConverterParameter="True"/>
+                        <Binding Path="Status.IsRunning" Converter="{StaticResource BoolToVisibilityConverter}" ConverterParameter="False"/>
+                    </MultiBinding>
+                </GroupBox.Visibility>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1">
+
+                    <Button Style="{StaticResource MahApps.Styles.Button.Flat}" Background="Transparent" Margin="4,0" Padding="0" 
+                            ToolTip="Редактировать поле" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Command="{Binding Path=EditCmd}"
+                            Visibility="{Binding Path=Status.IsEdit, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=False}">
+                        <StackPanel>
+                            <Image Width="32" Source="/RectangularSpaceDisplay;component/Resources/Buttons/Edit_64.png" Margin="0"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource MahApps.Styles.Button.Flat}" Background="Transparent" Margin="4,0" Padding="0" 
+                            ToolTip="Принять" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Command="{Binding Path=ApplyEditCmd}"
+                            Visibility="{Binding Path=Status.IsEdit, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+                        <StackPanel>
+                            <Image Width="32" Source="/RectangularSpaceDisplay;component/Resources/Buttons/OK_64.png" Margin="0"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource MahApps.Styles.Button.Flat}" Background="Transparent" Margin="4,0" Padding="0" 
+                            ToolTip="Отменить" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Command="{Binding Path=CancelEditCmd}"
+                            Visibility="{Binding Path=Status.IsEdit, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+                        <StackPanel>
+                            <Image Width="32" Source="/RectangularSpaceDisplay;component/Resources/Buttons/Cancel_64.png" Margin="0"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource MahApps.Styles.Button.Flat}" Background="Transparent" Margin="4,0" Padding="0" 
+                            ToolTip="Сохранить поле" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Command="{Binding Path=SaveCmd}"
+                            Visibility="{Binding Path=Status.IsEdit, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=False}">
+                        <StackPanel>
+                            <Image Width="32" Source="/RectangularSpaceDisplay;component/Resources/Buttons/Save_64.png" Margin="0"/>
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
+            </GroupBox>
+
         </StackPanel>
         
-        <!--<StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-            
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                <TextBlock VerticalAlignment="Center" Margin="10">
-                    <Run Text="Шаг: " FontSize="16" />
-                    <Run Text="{Binding Path=StepNumber}" FontSize="16" FontWeight="DemiBold"/>
-                </TextBlock>
-                <TextBlock VerticalAlignment="Center" Margin="10">
-                    <Run Text="[" FontSize="16" />
-                    <Run Text="{Binding Path=Time, Converter={StaticResource MillisecondsToStringConverter}}" FontSize="16" FontWeight="DemiBold"/>
-                    <Run Text="ms]" FontSize="16" />
-                </TextBlock>
-            </StackPanel>
-
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-
-                <GroupBox Header="Поле" Background="White" Margin="5"
-                          Visibility="{Binding Path=IsRunning, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=False}">
-                    
-                    <StackPanel Orientation="Horizontal">
-
-                        <ComboBox ItemsSource="{Binding Path=Names, Mode=OneTime}" SelectedItem="{Binding Path=SelectedName}" Margin="5"/>
-                        <StackPanel Orientation="Horizontal" Margin="5">
-
-                            
-
-                        </StackPanel>
-                        
-                    </StackPanel>
-                </GroupBox>
-
-                
-
-                <GroupBox Header="Редактирование" Background="White" Margin="5">
-
-                    <GroupBox.Visibility>
-                        <MultiBinding Converter="{StaticResource VisibilityMultiConverter}" ConverterParameter="And">
-                            <Binding Path="IsReady" Converter="{StaticResource BoolToVisibilityConverter}" ConverterParameter="True"/>
-                            <Binding Path="IsRunning" Converter="{StaticResource BoolToVisibilityConverter}" ConverterParameter="False"/>
-                        </MultiBinding>
-                    </GroupBox.Visibility>
-                    
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-                        <StackPanel Orientation="Horizontal" Margin="5">
-
-                            <Button Style="{StaticResource MahApps.Styles.Button.Flat}" Background="Transparent" Margin="4,0" Padding="0" 
-                                    ToolTip="Редактировать поле" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                    Command="{Binding Path=Settings.EditCmd}"
-                                    Visibility="{Binding Path=IsEdit, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=False}">
-                                <StackPanel>
-                                    <Image Width="32" Source="/LifeGamePlot;component/Resources/Buttons/Edit/Edit_64.png" Margin="0"/>
-                                </StackPanel>
-                            </Button>
-
-                            <Button Style="{StaticResource MahApps.Styles.Button.Flat}" Background="Transparent" Margin="4,0" Padding="0" 
-                                    ToolTip="Принять" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                    Command="{Binding Path=Settings.ApplyCmd}"
-                                    Visibility="{Binding Path=IsEdit, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
-                                <StackPanel>
-                                    <Image Width="32" Source="/LifeGamePlot;component/Resources/Buttons/Edit/OK_64.png" Margin="0"/>
-                                </StackPanel>
-                            </Button>
-
-                            <Button Style="{StaticResource MahApps.Styles.Button.Flat}" Background="Transparent" Margin="4,0" Padding="0" 
-                                    ToolTip="Отменить" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                    Command="{Binding Path=Settings.CancelCmd}"
-                                    Visibility="{Binding Path=IsEdit, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
-                                <StackPanel>
-                                    <Image Width="32" Source="/LifeGamePlot;component/Resources/Buttons/Edit/Cancel_64.png" Margin="0"/>
-                                </StackPanel>
-                            </Button>
-
-                            <Button Style="{StaticResource MahApps.Styles.Button.Flat}" Background="Transparent" Margin="4,0" Padding="0" 
-                                    ToolTip="Сохранить поле" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                    Command="{Binding Path=Settings.SaveCmd}"
-                                    Visibility="{Binding Path=IsEdit, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=False}">
-                                <StackPanel>
-                                    <Image Width="32" Source="/LifeGamePlot;component/Resources/Buttons/Play/Save_64.png" Margin="0"/>
-                                </StackPanel>
-                            </Button>
-
-                        </StackPanel>
-                    </StackPanel>
-                </GroupBox>
-
-            </StackPanel>
-            
-        </StackPanel>-->
     </Grid>
 </UserControl>

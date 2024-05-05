@@ -13,7 +13,7 @@ namespace LifeGame.Model.Creators
         {
             cells = CreateCells(null);
             links = CreateLinks(cells);
-            dataIO = new ConwaysLifeDataIO();
+            dataIO = new ConwaysLifeDataIO(Args.Rows, Args.Columns);
             converter = new ConwaysLifeColors();
             Random(cells);
         }

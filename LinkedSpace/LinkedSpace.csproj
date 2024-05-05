@@ -60,6 +60,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Create\RectangularFieldCreationArgs.cs" />
+    <Compile Include="Model\Edit\CloneSetter.cs" />
+    <Compile Include="Model\Edit\Setter.cs" />
+    <Compile Include="Model\Edit\StructSetter.cs" />
     <Compile Include="View\BaseCreator\BaseCreatorControl.cs" />
     <Compile Include="View\Dialog\Extensions.cs" />
     <Compile Include="Model\IDataIO.cs" />

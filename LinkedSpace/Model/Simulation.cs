@@ -2,6 +2,7 @@
 using LinkedSpace.Model.Create;
 using LinkedSpace.Model.Field;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,5 +27,16 @@ namespace LinkedSpace.Model
 
         public abstract Task CreationRequest(object sender);
         public abstract void CreateSpace();
+
+        public async Task<TColor> ChangeCell<TColor>(object sender, int index, Func<Argb, TColor> colorFunction)
+        {
+            Argb color = await _space.ChangeCell(sender, index);
+            return colorFunction(color);
+        }
+
+        public void Commit() => _space.Commit();
+        public void RollBack() => _space.RollBack();
+
+        public bool Save(FileInfo fileInfo) => _space.WriteFile(fileInfo);
     }
 }

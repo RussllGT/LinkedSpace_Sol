@@ -1,8 +1,12 @@
 ﻿using LinkedSpace.Model;
 using LinkedSpace.Model.Create;
+using LinkedSpace.View.Dialog;
+using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Mvvm;
+using System;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
 using CurrentCanvas = RectangularSpaceDisplay.ViewModel.OxyCanvasViewModel; // Заменить на новую отрисовку
 
@@ -11,6 +15,9 @@ namespace RectangularSpaceDisplay.ViewModel
     public class CommonViewModel : BindableBase
     {
         #region BINDINGS
+
+        private IDialogHostOwner _owner;
+        public IDialogHostOwner Owner => _owner;
 
         private readonly SimulationsContainer _container;
         public SimulationsContainer Container => _container;
@@ -47,6 +54,8 @@ namespace RectangularSpaceDisplay.ViewModel
         public DelegateCommand RunCmd { get; }
         public DelegateCommand StepCmd { get; }
         public DelegateCommand EditCmd { get; }
+        public DelegateCommand ApplyEditCmd { get; }
+        public DelegateCommand CancelEditCmd { get; }
         public DelegateCommand SaveCmd { get; }
 
         #endregion
@@ -58,9 +67,14 @@ namespace RectangularSpaceDisplay.ViewModel
             _container = new SimulationsContainer();
 
             FieldCmd = new DelegateCommand<SimulationWindow>(Cmd_Field);
+
             RunCmd = new DelegateCommand(Cmd_Run);
             StepCmd = new DelegateCommand(Cmd_Step);
+
             EditCmd = new DelegateCommand(Cmd_Edit);
+            ApplyEditCmd = new DelegateCommand(Cmd_ApplyEdit);
+            CancelEditCmd = new DelegateCommand(Cmd_CancelEdit);
+
             SaveCmd = new DelegateCommand(Cmd_Save);
         }
 
@@ -78,9 +92,11 @@ namespace RectangularSpaceDisplay.ViewModel
 
         private async void Cmd_Field(SimulationWindow window)
         {
+            if (_owner is null) _owner = window;
+
             Simulation = _container[_selectedId];
 
-            await Simulation.CreationRequest(window);
+            await Simulation.CreationRequest(_owner);
             _simulation.CreateSpace();
 
             RectangularFieldCreationArgs args = (RectangularFieldCreationArgs)Simulation.Creator.Args;
@@ -114,14 +130,27 @@ namespace RectangularSpaceDisplay.ViewModel
 
         private void Cmd_Step() => _canvas.Redraw(_canvas.Next());
 
-        public void Cmd_Edit()
-        {
+        private void Cmd_Edit() => _canvas.StartEdit();
 
-        }
+        private void Cmd_ApplyEdit() => _canvas.ApplyEdit();
+
+        private void Cmd_CancelEdit() => _canvas.CancelEdit();
 
         public void Cmd_Save()
         {
-
+            try
+            {
+                SaveFileDialog sfd = new SaveFileDialog { Filter = "Life Game Field File (*.lgf) | *.lgf" };
+                if (sfd.ShowDialog().Value)
+                {
+                    _simulation.Save(new System.IO.FileInfo(sfd.FileName));
+                    MessageBox.Show("Файл сохранён");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         #endregion
