@@ -7,7 +7,7 @@
         xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
         xmlns:local="clr-namespace:RectangularSpaceDisplay"
         mc:Ignorable="d"
-        Title="CONWAY'S LIFE GAME" Height="650" Width="1000">
+        Title="CONWAY'S LIFE GAME" Height="650" Width="1000" MinHeight="550" MinWidth="700">
 
     <wpf:DialogHost Identifier="{Binding Path=HostDialogIdentifier, Mode=OneTime}">
         <ContentControl Content="{Binding Path=VisibleContent, UpdateSourceTrigger=PropertyChanged}"/>

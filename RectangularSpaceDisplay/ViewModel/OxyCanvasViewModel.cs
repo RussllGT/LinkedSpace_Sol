@@ -1,8 +1,10 @@
 ﻿using LinkedSpace.Model.Color;
+using LinkedSpace.Model.Create;
 using OxyPlot;
 using OxyPlot.Annotations;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using System;
 using System.Collections.Generic;
 
 namespace RectangularSpaceDisplay.ViewModel
@@ -70,9 +72,9 @@ namespace RectangularSpaceDisplay.ViewModel
             Screen.Series.Clear();
             Areas = new AreaSeries[width * height];
             int k = 0;
-            for (int i = 0; i < width; ++i)
+            for (int j = 0; j < height; ++j)
             {
-                for (int j = 0; j < height; ++j)
+                for (int i = 0; i < width; ++i)
                 {
                     first = new DataPoint(i + shift, j + shift);
                     second = new DataPoint(i + shift, j + 1 - shift);
@@ -115,9 +117,43 @@ namespace RectangularSpaceDisplay.ViewModel
             _vm.Status.StepNumber = step.Number;
         }
 
-        #endregion
+        private async void Screen_MouseDown(object sender, OxyMouseDownEventArgs e)
+        {
+            DataPoint point = Axis.InverseTransform(e.Position, _xAxis, _yAxis);
+            int x = (int)Math.Truncate(point.X);
+            int y = (int)Math.Truncate(point.Y);
 
-        
+            RectangularFieldCreationArgs args = (RectangularFieldCreationArgs)_vm.Simulation.Creator.Args;
+            int index = IsAxisInversed ? x * args.Rows + y : y * args.Columns + x;
+            AreaSeries area = Areas[index];
+
+            OxyColor color = await _vm.Simulation.ChangeCell(_vm.Owner, index, ConvertColor);
+            SetColor(area, color);
+            Screen.InvalidatePlot(true);
+        }
+
+        public override void StartEdit()
+        {
+            _vm.Status.IsEdit = true;
+            Screen.MouseDown += Screen_MouseDown;
+        }
+
+        public override void ApplyEdit()
+        {
+            Screen.MouseDown -= Screen_MouseDown;
+            _vm.Simulation.Commit();
+            _vm.Status.IsEdit = false;
+        }
+
+        public override void CancelEdit()
+        {
+            Screen.MouseDown -= Screen_MouseDown;
+            _vm.Simulation.RollBack();
+            Redraw(_vm.Simulation.Current(ConvertColor));
+            _vm.Status.IsEdit = false;
+        }
+
+        #endregion
 
         private static LinearAxis CreateAxis(AxisPosition position)
         {

@@ -103,13 +103,7 @@
     <Compile Include="ViewModel\OxyCanvasViewModel.cs" />
     <Compile Include="ViewModel\CommonViewModel.cs" />
     <Compile Include="ViewModel\StatusViewModel.cs" />
-    <Compile Include="ViewModel\_Obsolette\ColorViewModel.cs" />
-    <Compile Include="ViewModel\_Obsolette\EditViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\_Obsolette\PlayViewModel.cs" />
-    <Compile Include="ViewModel\_Obsolette\PlotViewModel.cs" />
-    <Compile Include="ViewModel\_Obsolette\SettingsViewModel.cs" />
-    <Compile Include="ViewModel\_Obsolette\OxyColorInfo.cs" />
     <Compile Include="CommonView.xaml.cs">
       <DependentUpon>CommonView.xaml</DependentUpon>
     </Compile>
@@ -158,7 +152,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Buttons\Edit\Edit_64.png" />
+    <Resource Include="Resources\Buttons\Edit_64.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Buttons\Save_64.png" />
@@ -169,11 +163,8 @@
     <Resource Include="Resources\Buttons\Stop_64.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Buttons\Edit\Apply_64.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Buttons\Edit\Cancel_64.png" />
-    <Resource Include="Resources\Buttons\Edit\OK_64.png" />
+    <Resource Include="Resources\Buttons\Cancel_64.png" />
+    <Resource Include="Resources\Buttons\OK_64.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Buttons\Field_64.png" />
