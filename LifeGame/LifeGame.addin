@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfAddIn>
+	<AddIn>
+		<AddInId>0FAB361B-5E0D-43E8-A7AC-C81FE198CE08</AddInId>
+		<Name>Жизнь</Name>
+		<Assembly>LifeGame.dll</Assembly>
+		<FullClassName>LifeGame.ConwaysLifeSim</FullClassName>
+		<Author>Ruslan Gataulin</Author>
+		<Description>None</Description>
+	</AddIn>
+</ArrayOfAddIn>

@@ -1,0 +1,75 @@
+﻿<base:BaseCreatorControl x:Class="LifeGame.Controls.Creator.LifeCreatorControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:base="clr-namespace:LinkedSpace.View.BaseCreator;assembly=LinkedSpace"
+             xmlns:cnvs="clr-namespace:LinkedSpace.View.ValueConverters;assembly=LinkedSpace"
+             xmlns:local="clr-namespace:LifeGame.Controls.Creator"
+             Background="White"
+             Width="160" Height="100">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DialogHost.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Steel.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <cnvs:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter"/>
+            <cnvs:EnumToBoolConverter x:Key="EnumToBoolConverter"/>
+            <cnvs:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <cnvs:VisibilityMultiConverter x:Key="VisibilityMultiConverter"/>
+            <cnvs:MillisecondsToStringConverter x:Key="MillisecondsToStringConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
+            <TextBox Text="{Binding Path=Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Width="60" Margin="2,5"/>
+            <TextBlock Text="x" FontSize="14" VerticalAlignment="Center" Margin="2,5"/>
+            <TextBox Text="{Binding Path=Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="14" Width="60" Margin="2,5"/>
+            <TextBlock Text="h" FontSize="14" VerticalAlignment="Center" Margin="2,5"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
+
+            <Button Style="{StaticResource  ResourceKey=MahApps.Styles.Button.Flat}" Background="Transparent" Margin="4,0" Padding="0" 
+                    ToolTip="Создать пустое поле" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Command="{Binding Path=EmptyCmd}">
+                <StackPanel>
+                    <Image Width="32" Source="/LifeGame;component/Resources/Buttons/Empty_64.png" Margin="0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Style="{StaticResource MahApps.Styles.Button.Flat}" Background="Transparent" Margin="4,0" Padding="0" 
+                    ToolTip="Создать случайное поле" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Command="{Binding Path=RandomCmd}">
+                <StackPanel>
+                    <Image Width="32" Source="/LifeGame;component/Resources/Buttons/Random_64.png" Margin="0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Style="{StaticResource  ResourceKey=MahApps.Styles.Button.Flat}" Background="Transparent" Margin="4,0" Padding="0" 
+                    ToolTip="Загрузить поле" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Command="{Binding Path=OpenCmd}">
+                <StackPanel>
+                    <Image Width="32" Source="/LifeGame;component/Resources/Buttons/Open_64.png" Margin="0"/>
+                </StackPanel>
+            </Button>
+
+            <Button Style="{StaticResource  ResourceKey=MahApps.Styles.Button.Flat}" Background="Transparent" Margin="4,0" Padding="0" 
+                    ToolTip="Отмена" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Command="{Binding Path=CancelCmd}">
+                <StackPanel>
+                    <Image Width="32" Source="/LifeGame;component/Resources/Buttons/Cancel_64.png" Margin="0"/>
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
+    </Grid>
+</base:BaseCreatorControl>

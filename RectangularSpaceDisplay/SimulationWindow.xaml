@@ -1,0 +1,15 @@
+﻿<mah:MetroWindow x:Class="RectangularSpaceDisplay.SimulationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+        xmlns:local="clr-namespace:RectangularSpaceDisplay"
+        mc:Ignorable="d"
+        Title="CONWAY'S LIFE GAME" Height="650" Width="1000">
+
+    <wpf:DialogHost Identifier="{Binding Path=HostDialogIdentifier, Mode=OneTime}">
+        <ContentControl Content="{Binding Path=VisibleContent, UpdateSourceTrigger=PropertyChanged}"/>
+    </wpf:DialogHost>
+</mah:MetroWindow>
